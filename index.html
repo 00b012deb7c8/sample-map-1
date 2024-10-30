@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Display a map</title>
+    <style>
+      body {margin: 0; padding: 0;}
+      #ZMap {position: absolute; top: 0; bottom: 0; width: 100%;}
+    </style>
+    <!-- ローダーを読み込む -->
+    <script src="https://test-js.zmaps-api.com/zma_loader.js?key=jfjeCLppSD5sBex8qy0sJ7qpGyoe6vV74Evw7MvM&auth=referer"></script>
+  </head>
+  <body>
+    <div id="ZMap"></div>
+    <script>
+      // 手順2の処理を記載
+      // JavaScript APIの処理をここに記載
+
+      <!-- ローダーのメソッド実行 -->
+      ZMALoader.setOnLoad(function (mapOptions, error) {
+        if (error) {
+          console.error(error)
+          return
+        }
+
+        // 地図オブジェクト
+        var map;
+
+        // 中心点の緯度経度(東京駅)
+        const lat = 35.681406, lng = 139.767132;
+
+        // マップコンテナ要素を取得する
+        const mapElement = document.getElementById('ZMap');
+
+        // MapOptionsをデフォルト値から変更する場合各パラメータに値を設定
+        // 中心点の緯度経度を設定
+        mapOptions.center = new ZDC.LatLng(lat, lng);
+
+        // 地図を生成
+        map = new ZDC.Map(
+          mapElement,
+          mapOptions,
+          function() {
+            // Success callback
+            // コントロールを追加する
+            // 左上 拡大縮小ボタン表示
+            map.addControl(new ZDC.ZoomButton('top-left'));
+            // 右上 コンパス表示
+            map.addControl(new ZDC.Compass('top-right'));
+            // 左下 スケールバー表示
+            map.addControl(new ZDC.ScaleBar('bottom-left'));
+
+          },
+          function() {
+            // Failure callback
+          }
+        );
+      })
+    </script>
+  </body>
+</html>
